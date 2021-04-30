@@ -1,5 +1,25 @@
 {
-    "background":{
-        "scripts":["background.js"]
-    }
+    "content_scripts": [
+        {
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "js": [
+                "content.js"
+            ]
+        }
+    ],
+
+    "browser_action":{
+        "default_title": "sitememo",
+        "default_popup": "index.html"
+    },
+
+
+
+    "manifest_version": 2,
+    "name": "sitememo",
+    "version": "1.0.0.1",
+    "description": "Pastes notes on the web"
 }
