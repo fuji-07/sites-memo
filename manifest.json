@@ -1,34 +1,27 @@
 {
-    "manifest_version": 2,
+    "manifest_version": 3,
     "name": "sitememo",
-    "version": "1.0.0.1",
     "description": "Pastes notes on the web",
+    "version": "1.0",
+    "background": {
+        "service_worker": "background.js"
+    },
     "content_scripts": [
         {
             "matches": [
-                "http://*/*",
-                "https://*/*"
+                "<all_urls>"
             ],
             "js": [
-                "contents.js"
-            ],
-            "run_at": "document_end"
+                "content.js"
+            ]
         }
     ],
-    "background": {
-        "scripts": [
-            "background.js"
-        ],
-        "persistent": false
-    },
-
-
-    "browser_action": {
-        "default_title": "sitememo",
-        "default_popup": "index.html"
-    },
-
     "permissions": [
-        "tabs"
-    ]
+        "storage",
+        "activeTab",
+        "scripting"
+    ],
+    "action": {
+        "default_popup": "popup.html"
+    }
 }
