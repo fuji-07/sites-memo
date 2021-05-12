@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "sitememo",
-    "description": "Pastes notes on the web",
+    "description": "Paste notes on the web",
     "version": "1.0",
     "background": {
         "service_worker": "background.js"
