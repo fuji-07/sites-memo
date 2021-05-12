@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Template Test</title>
+</head>
+
+<style>
+  div.memo {
+    background-color : yellow;
+    border : 1pt solid gray;
+    color : black;
+    display : none;
+    height : 200pt;
+    margin : 0pt;
+    padding : 0pt;
+    width : 300pt;
+  }
+
+  textarea.memo {
+    background-color : lightyellow;
+    border-width : 0px;
+    box-sizing : border-box;
+    height : calc(100% - 25px);
+    width : 100%;
+  }
+</style>
+
+<script>
+  function createMemo() {
+    let template = document.getElementById("template");
+    let isDeepCopy = true;
+    let newMemo = template.cloneNode(isDeepCopy);
+    newMemo.removeAttribute("id");
+    newMemo.style.display = "block";
+    document.body.appendChild(newMemo);
+  }
+
+  function removeMemo() {
+    
+  }
+</script>
+<body>
+
+<div class="memo" id="template">
+  <button onclick="removeMemo()">×</button>
+  <br>
+  <textarea class="memo">メモのテンプレート</textarea>
+</div>
+
+<button onclick="createMemo()">Add!!</button>
+</body>
+</html>
