@@ -5,6 +5,8 @@
     min-width: 150px;
     height: 80px;
     min-height: 80px;
+    top: 0;
+    left: 0;
 
     resize: both;
     overflow: hidden;

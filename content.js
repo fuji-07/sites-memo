@@ -9,22 +9,31 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 });
 
 function createMemo() {
-    let div = document.createElement('div');
-    div.classList.add('draggable');
-    div.style.width = '100px';
-    div.style.height = '100px';
-    div.style.backgroundColor = 'red';
-    div.style.position = 'absolute';
-    div.style.top = '0px';
-    div.style.left = '0px';
-    div.style.zIndex = '9999';
+    let container = document.createElement('div');
+    container.classList.add('memo-container');
 
-    document.body.append(div);
+    let title = document.createElement('div');
+    title.classList.add('memo-title');
+
+    let closebutton = document.createElement('input');
+    closebutton.classList.add('closebutton');
+    closebutton.type = 'button';
+    closebutton.value = '×';
+
+    let textarea = document.createElement('textarea');
+    textarea.classList.add('memo-textarea');
+
+    title.appendChild(closebutton);
+
+    container.appendChild(title);
+    container.appendChild(textarea);
+
+    document.body.append(container);
     initDraggableElements();
 }
 
 function initDraggableElements() {
-    draggableElements = document.getElementsByClassName('draggable');
+    draggableElements = document.getElementsByClassName('memo-container');
 
     for (let i = 0; i < draggableElements.length; i++) {
         draggableElements[i].addEventListener('mousedown', mdown, false);

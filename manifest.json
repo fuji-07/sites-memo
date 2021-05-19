@@ -12,7 +12,11 @@
                 "<all_urls>"
             ],
             "js": [
+                "memo/memo.js",
                 "content.js"
+            ],
+            "css":[
+                "memo/memo.css"
             ]
         }
     ],
