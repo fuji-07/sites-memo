@@ -1,0 +1,25 @@
+
+#contents{
+    border: none;
+    display: block;
+    padding: 2rem 1rem 2.1rem;
+    font-size: 16px;
+    line-height: 2rem;
+    background-color: rgba(255,223,70,0.1);
+    /* background-color: #fdf570; */
+
+    
+    
+    background-image: linear-gradient( rgba(32,178,170,0.2) 0.1rem, transparent 0.1rem);
+    background-size: auto 2rem;
+    
+    overflow: hidden; 
+    /*autoかhidden*/
+
+}
+
+#contents:focus{
+    outline: none;
+    background-color: white;
+}
+
