@@ -11,6 +11,9 @@
             "matches": [
                 "<all_urls>"
             ],
+            "css": [
+                "./memo/memo.css"
+            ],
             "js": [
                 "content.js"
             ]

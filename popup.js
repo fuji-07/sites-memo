@@ -1,12 +1,11 @@
-let createMemoButton;
-
 window.onload = function () {
-    createMemoButton = document.getElementById('creatememo');
-    createMemoButton.addEventListener('click', createMemo);
+    let createMemoButton = document.getElementById('creatememo');
+    createMemoButton.addEventListener('click', { message: 'createMemo', handleEvent: sendMessageToContent });
 };
 
-function createMemo() {
+function sendMessageToContent(event) {
+    let message = this.message;
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-        chrome.tabs.sendMessage(tabs[0].id, { message: 'createMemo' }, function (res) { });
+        chrome.tabs.sendMessage(tabs[0].id, { message: message }, function (res) { return });
     });
-}
+};

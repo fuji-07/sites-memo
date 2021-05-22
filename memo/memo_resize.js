@@ -1,15 +1,14 @@
 let textarea;
-let CLIENT_HEIGHT;
+let clientHeight;
 let container;
-
 
 window.onload = () =>{
     textarea = document.getElementsByClassName('memo-textarea')[0];
-    CLIENT_HEIGHT = textarea.clientHeight;
+    clientHeight = textarea.clientHeight;
     container = document.getElementsByClassName('memo-container')[0];
 
     textarea.addEventListener('input',()=>{
-        textarea.style.height = CLIENT_HEIGHT + 'px';
+        textarea.style.height = clientHeight + 'px';
 
         let scrollHeight = textarea.scrollHeight;
         textarea.style.height = scrollHeight + 'px';
