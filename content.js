@@ -1,9 +1,18 @@
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    if (request.message == 'createMemo') {
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+    if (message.actionName == 'createMemo') {
         createMemo();
     }
     sendResponse();
 });
+
+document.addEventListener('mouseup', (event) => {
+    if (event.button == 2) {
+        let pos = { clientX: event.clientX, clientY: event.clientY };
+        let message = { actionName: 'setMousePos', pos: pos };
+        chrome.runtime.sendMessage(message);
+    }
+});
+
 
 function createMemo() {
     let memo = _createMemo();
