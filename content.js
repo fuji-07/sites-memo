@@ -3,6 +3,8 @@ const MEMO_HEIGHT = 100;
 
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+
+    //メモの作成が呼び出された場合、座標指定
     if (message.actionName == 'createMemo') {
         let pos;
         if (message.pos == null) {
@@ -14,9 +16,12 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         }
         createMemo(pos);
     }
+
+
     sendResponse();
 });
 
+//右クリック位置の記録
 document.addEventListener('mouseup', (event) => {
     if (event.button == 2) {
         let pos = { X: event.pageX, Y: event.pageY };
