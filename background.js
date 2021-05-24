@@ -13,7 +13,7 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
 
     switch (selectedMenu) {
         case 'createMemo':
-            chrome.tabs.sendMessage(tab.id, { actionName: 'createMemo' });
+            chrome.tabs.sendMessage(tab.id, { actionName: 'createMemo', pos: rightClickedPos });
             break;
     }
 });

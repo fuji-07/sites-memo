@@ -1,9 +1,9 @@
 .memo-container {
     box-sizing: border-box;
     position: absolute;
-    width: 150px;
+    /* width: 150px; */
     min-width: 150px;
-    height: 100px;
+    /* height: 100px; */
     min-height: 100px;
     text-align: center;
 
