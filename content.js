@@ -1,6 +1,9 @@
 const MEMO_WIDTH = 150;
 const MEMO_HEIGHT = 100;
 
+let x;
+let y;
+
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
 
@@ -37,29 +40,36 @@ function createMemo(pos) {
     container.classList.add('memo-container');
 
     let titleBar = document.createElement('div');
-    titleBar.classList.add('memo-titlebar');
+    titleBar.classList.add('titlebar');
 
-    let closeButton = document.createElement('input');
-    closeButton.classList.add('closebutton')
-    closeButton.type = 'button';
-    closeButton.value = '×';
+
+    const imagePath = 'memo/deleteButton.png';
+    const imageUrl = chrome.runtime.getURL(imagePath);
+
+    console.log(imageUrl);
+
+    let closeButton = document.createElement('div');
+    closeButton.classList.add('closebutton');
+    closeButton.style.backgroundImage = `url("${imageUrl}")`;
+    // closeButton.innerHTML = '×';
 
     let textArea = document.createElement('textarea');
-    textArea.classList.add('memo-textarea');
+    textArea.classList.add('textarea');
 
     //要素合体
-    titleBar.appendChild(closeButton);
     container.appendChild(titleBar);
+    container.appendChild(closeButton);
     container.appendChild(textArea);
-
-    textArea.addEventListener('input', resizeMemo);
-    closeButton.addEventListener('click', deleteMemo);
 
     container.style.width = MEMO_WIDTH + 'px';
     container.style.height = MEMO_HEIGHT + 'px';
 
     container.style.top = pos.Y + 'px';
     container.style.left = pos.X + 'px';
+
+    titleBar.addEventListener('mousedown', mdown);
+    textArea.addEventListener('input', resizeMemo);
+    closeButton.addEventListener('click', deleteMemo);
 
     document.body.appendChild(container);
 }
@@ -74,6 +84,40 @@ function resizeMemo() {
     container.style.height = scrollHeight + 50 + 'px';
 }
 
-function deleteMemo() {
-    this.parentNode.parentNode.remove();
+function deleteMemo(event) {
+    this.parentNode.remove();
+}
+
+function mdown(event) {
+    if (event.target.className !== 'closebutton') {
+        this.parentNode.classList.add('drag');
+
+        x = event.pageX - this.parentNode.offsetLeft;
+        y = event.pageY - this.parentNode.offsetTop;
+
+        window.addEventListener('mousemove', mmove, false);
+    }
+
+}
+
+function mmove(event) {
+
+    let drag = document.getElementsByClassName('drag')[0];
+
+    drag.style.top = event.pageY - y + 'px';
+    drag.style.left = event.pageX - x + 'px';
+
+    drag.addEventListener('mouseup', mup, false);
+    window.addEventListener('mouseleave', mup, false);
+
+}
+
+function mup(event) {
+    let drag = document.getElementsByClassName('drag')[0];
+    if (drag !== null) {
+        window.removeEventListener('mousemove', mmove, false);
+        drag.removeEventListener('mouseup', mup, false);
+        drag.classList.remove('drag');
+    }
+
 }
