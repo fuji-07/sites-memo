@@ -10,6 +10,7 @@
     resize: horizontal;
     overflow: auto;
 
+    box-shadow: 2px 2px 4px;
     background-color: lightyellow;
     border: 1pt solid gray;
 }
