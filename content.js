@@ -1,5 +1,5 @@
 const MEMO_WIDTH = 150;
-const MEMO_HEIGHT = 100;
+const MEMO_HEIGHT = 150;
 
 let x;
 let y;
@@ -42,9 +42,11 @@ function createMemo(pos) {
     let titleBar = document.createElement('div');
     titleBar.classList.add('titlebar');
 
+    //ボタンの種類
+    const imagePath = 'memo/deleteButton/';
+    const imageName = '2.png';
 
-    const imagePath = 'memo/deleteButton.png';
-    const imageUrl = chrome.runtime.getURL(imagePath);
+    const imageUrl = chrome.runtime.getURL(imagePath + imageName);
 
     console.log(imageUrl);
 

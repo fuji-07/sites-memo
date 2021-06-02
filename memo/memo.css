@@ -5,13 +5,13 @@
     /* width: 150px; */
     min-width: 150px;
     /* height: 100px; */
-    min-height: 100px;
+    min-height: 150px;
     text-align: center;
 
     resize: horizontal;
     overflow: auto;
 
-    background-color: lightgoldenrodyellow;
+    background-color: lightyellow;
     border: 1pt solid gray;
 }
 
@@ -38,18 +38,36 @@
     resize: none;
     overflow: hidden;
     width: calc(100% - 14px);
-    height: 50px;
-    min-height: 50px;
+    height: 100px;
+    min-height: 100px;
+
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+    line-height: 2em;
 
     padding: 5px;
 
-    border: 1px solid darkkhaki;
+    border: none;
     background-color: lightyellow;
+
+
+    /* background-image: repeating-linear-gradient(to bottom,
+      rgb(26,198,204),
+      rgb(26,198,204) 7%,
+      rgb(100,100,100) 2rem); */
+
+      /* background-image: repeating-linear-gradient(to bottom,
+      transparent 0 2em,
+      black 2em 1px); */
+
+      background-image: repeating-linear-gradient(to bottom,
+      transparent 0 calc(2em - 1px),
+      rgba(17, 20, 20, 0.2) calc(2em - 1px) 2em);
 }
 
 .memo-container .textarea:focus {
     box-sizing: border-box;
-    border: 1px solid darkkhaki;
+    border: none;
     background-color: lightyellow;
     outline: none;
 }
