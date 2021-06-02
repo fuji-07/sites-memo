@@ -7,7 +7,6 @@
     /* height: 100px; */
     min-height: 150px;
     text-align: center;
-
     resize: horizontal;
     overflow: auto;
 
@@ -18,19 +17,17 @@
 .memo-container .titlebar {
     position: relative;
     float: left;
-
     width: calc(100% - 40px);
     height: 20px;
     margin: 5px;
 }
+
 .memo-container .closebutton {
     width: 20px;
     height: 20px;
     margin: 5px;
-
     float: right;
 }
-
 
 .memo-container .textarea {
     box-sizing: border-box;
@@ -38,6 +35,7 @@
     resize: none;
     overflow: hidden;
     width: calc(100% - 14px);
+
     height: 100px;
     min-height: 100px;
 
@@ -48,21 +46,12 @@
     padding: 5px;
 
     border: none;
+
     background-color: lightyellow;
 
-
-    /* background-image: repeating-linear-gradient(to bottom,
-      rgb(26,198,204),
-      rgb(26,198,204) 7%,
-      rgb(100,100,100) 2rem); */
-
-      /* background-image: repeating-linear-gradient(to bottom,
-      transparent 0 2em,
-      black 2em 1px); */
-
-      background-image: repeating-linear-gradient(to bottom,
-      transparent 0 calc(2em - 1px),
-      rgba(17, 20, 20, 0.2) calc(2em - 1px) 2em);
+    background-image: repeating-linear-gradient(to bottom,
+    transparent 0 calc(2em - 1px),
+    rgba(17, 20, 20, 0.2) calc(2em - 1px) 2em);
 }
 
 .memo-container .textarea:focus {
@@ -71,4 +60,3 @@
     background-color: lightyellow;
     outline: none;
 }
-
