@@ -31,7 +31,7 @@
     "web_accessible_resources": [
         {
             "resources": [
-                "memo/deleteButton/*.png"
+                "memo/*"
             ],
             "matches": [
                 "<all_urls>"
