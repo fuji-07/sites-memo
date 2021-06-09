@@ -1,12 +1,103 @@
 const MEMO_WIDTH = 150;
 const MEMO_HEIGHT = 150;
 
+const parser = new DOMParser();
+
+function createMemo(pos) {
+    // ボタンの種類
+    const imagePath = 'memo/deleteButton/';
+    const imageName = '2.png';
+    const imageUrl = chrome.runtime.getURL(imagePath + imageName);
+
+    fetch(chrome.runtime.getURL('./memo/memo.html'))
+        .then(response => response.text())
+        .then((data) => {
+            const memo = parser.parseFromString(data, 'text/html').getElementsByClassName('memo-container')[0];
+            document.body.appendChild(memo);
+            return memo;
+        })
+        .then((memo) => {
+            const titleBar = memo.getElementsByClassName('titlebar')[0];
+            const textArea = memo.getElementsByClassName('textarea')[0];
+            const closeButton = memo.getElementsByClassName('closebutton')[0];
+
+            memo.style.top = pos.Y + 'px';
+            memo.style.left = pos.X + 'px';
+            closeButton.style.backgroundImage = `url("${imageUrl}")`;
+
+            titleBar.addEventListener('mousedown', moveMemo);
+            textArea.addEventListener('input', resizeMemo);
+            closeButton.addEventListener('click', deleteMemo);
+        });
+}
+
+function resizeMemo() {
+    const container = this.parentNode;
+
+    this.style.height = '0px';
+    const scrollHeight = this.scrollHeight;
+
+    this.style.height = scrollHeight + 'px';
+    container.style.height = scrollHeight + 50 + 'px';
+}
+
+function deleteMemo(event) {
+    this.parentNode.remove();
+}
+
+
 let x;
 let y;
+let dragElement;
+function moveMemo(event) {
+    if (event.target.className !== 'closebutton') {
+        dragElement = this.parentNode;
+
+        const elements = document.getElementsByClassName('memo-container');
+        for (let i = 0; i < elements.length; i++) {
+            elements[i].style.zIndex = 1000;
+        }
+        dragElement.style.zIndex += 10;
+
+        x = event.pageX - dragElement.offsetLeft;
+        y = event.pageY - dragElement.offsetTop;
+
+        dragElement.addEventListener('mouseup', mup, false);
+        document.body.addEventListener('mousemove', mmove, false);
+    }
+}
+
+function mmove(event) {
+    const moveToPosX = event.pageX - x;
+    const moveToPosY = event.pageY - y;
+
+    if (0 <= moveToPosY) {
+        dragElement.style.top = event.pageY - y + 'px';
+    } else {
+        dragElement.style.top = '0px';
+    }
+
+    if (0 <= moveToPosX) {
+        dragElement.style.left = event.pageX - x + 'px';
+    } else {
+        dragElement.style.left = '0px';
+    }
+    document.body.addEventListener('mouseout', mup, false);
+}
+
+function mup(event) {
+    if (dragElement !== null) {
+        document.body.removeEventListener('mousemove', mmove, false);
+        document.body.removeEventListener('mouseout', mmove, false);
+        dragElement.removeEventListener('mouseup', mup, false);
+        dragElement = null;
+    }
+
+}
+
 
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-
     //メモの作成が呼び出された場合、座標指定
     if (message.actionName == 'createMemo') {
         let pos;
@@ -19,8 +110,6 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         }
         createMemo(pos);
     }
-
-
     sendResponse();
 });
 
@@ -32,94 +121,3 @@ document.addEventListener('mouseup', (event) => {
         chrome.runtime.sendMessage(message);
     }
 });
-
-
-function createMemo(pos) {
-    //要素の作成
-    let container = document.createElement('div');
-    container.classList.add('memo-container');
-
-    let titleBar = document.createElement('div');
-    titleBar.classList.add('titlebar');
-
-    //ボタンの種類
-    const imagePath = 'memo/deleteButton/';
-    const imageName = '2.png';
-
-    const imageUrl = chrome.runtime.getURL(imagePath + imageName);
-
-    console.log(imageUrl);
-
-    let closeButton = document.createElement('div');
-    closeButton.classList.add('closebutton');
-    closeButton.style.backgroundImage = `url("${imageUrl}")`;
-    // closeButton.innerHTML = '×';
-
-    let textArea = document.createElement('textarea');
-    textArea.classList.add('textarea');
-
-    //要素合体
-    container.appendChild(titleBar);
-    container.appendChild(closeButton);
-    container.appendChild(textArea);
-
-    container.style.width = MEMO_WIDTH + 'px';
-    container.style.height = MEMO_HEIGHT + 'px';
-
-    container.style.top = pos.Y + 'px';
-    container.style.left = pos.X + 'px';
-
-    titleBar.addEventListener('mousedown', mdown);
-    textArea.addEventListener('input', resizeMemo);
-    closeButton.addEventListener('click', deleteMemo);
-
-    document.body.appendChild(container);
-}
-
-function resizeMemo() {
-    let container = this.parentNode;
-
-    this.style.height = '0px';
-    let scrollHeight = this.scrollHeight;
-
-    this.style.height = scrollHeight + 'px';
-    container.style.height = scrollHeight + 50 + 'px';
-}
-
-function deleteMemo(event) {
-    this.parentNode.remove();
-}
-
-function mdown(event) {
-    if (event.target.className !== 'closebutton') {
-        this.parentNode.classList.add('drag');
-
-        x = event.pageX - this.parentNode.offsetLeft;
-        y = event.pageY - this.parentNode.offsetTop;
-
-        window.addEventListener('mousemove', mmove, false);
-    }
-
-}
-
-function mmove(event) {
-
-    let drag = document.getElementsByClassName('drag')[0];
-
-    drag.style.top = event.pageY - y + 'px';
-    drag.style.left = event.pageX - x + 'px';
-
-    drag.addEventListener('mouseup', mup, false);
-    window.addEventListener('mouseleave', mup, false);
-
-}
-
-function mup(event) {
-    let drag = document.getElementsByClassName('drag')[0];
-    if (drag !== null) {
-        window.removeEventListener('mousemove', mmove, false);
-        drag.removeEventListener('mouseup', mup, false);
-        drag.classList.remove('drag');
-    }
-
-}
