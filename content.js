@@ -46,8 +46,8 @@ function deleteMemo(event) {
 }
 
 
-let x;
-let y;
+let startX;
+let startY;
 let dragElement;
 function moveMemo(event) {
     if (event.target.className !== 'closebutton') {
@@ -59,8 +59,8 @@ function moveMemo(event) {
         }
         dragElement.style.zIndex = Number(dragElement.style.zIndex) + 10;
 
-        x = event.pageX - dragElement.offsetLeft;
-        y = event.pageY - dragElement.offsetTop;
+        startX = event.pageX - dragElement.offsetLeft;
+        startY = event.pageY - dragElement.offsetTop;
 
         document.addEventListener('mousemove', mmove, false);
         document.addEventListener('mouseup', mup, false);
@@ -68,17 +68,17 @@ function moveMemo(event) {
 }
 
 function mmove(event) {
-    const moveToPosX = event.pageX - x;
-    const moveToPosY = event.pageY - y;
+    const moveToPosX = event.pageX - startX;
+    const moveToPosY = event.pageY - startY;
 
     if (0 <= moveToPosY) {
-        dragElement.style.top = event.pageY - y + 'px';
+        dragElement.style.top = event.pageY - startY + 'px';
     } else {
         dragElement.style.top = '0px';
     }
 
     if (0 <= moveToPosX) {
-        dragElement.style.left = event.pageX - x + 'px';
+        dragElement.style.left = event.pageX - startX + 'px';
     } else {
         dragElement.style.left = '0px';
     }
