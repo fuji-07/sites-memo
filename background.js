@@ -9,10 +9,9 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     sendResponse();
 });
 
-//コンテキストメニュー
+//コンテキストメニューがクリックされた際の処理
 chrome.contextMenus.onClicked.addListener(function (info, tab) {
     const selectedMenu = info.menuItemId;
-
     switch (selectedMenu) {
         case 'createMemo':
             chrome.tabs.sendMessage(tab.id, { actionName: 'createMemo', pos: rightClickedPos });
@@ -20,7 +19,7 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
     }
 });
 
-
+//コンテキストメニューの作成
 chrome.runtime.onInstalled.addListener(function () {
     chrome.contextMenus.create({
         title: 'メモを作成',
