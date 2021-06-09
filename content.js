@@ -62,8 +62,8 @@ function moveMemo(event) {
         x = event.pageX - dragElement.offsetLeft;
         y = event.pageY - dragElement.offsetTop;
 
-        dragElement.addEventListener('mouseup', mup, false);
-        document.body.addEventListener('mousemove', mmove, false);
+        document.addEventListener('mousemove', mmove, false);
+        document.addEventListener('mouseup', mup, false);
     }
 }
 
@@ -82,17 +82,14 @@ function mmove(event) {
     } else {
         dragElement.style.left = '0px';
     }
-    document.body.addEventListener('mouseout', mup, false);
 }
 
 function mup(event) {
     if (dragElement !== null) {
-        document.body.removeEventListener('mousemove', mmove, false);
-        document.body.removeEventListener('mouseout', mmove, false);
-        dragElement.removeEventListener('mouseup', mup, false);
+        document.removeEventListener('mousemove', mmove, false);
+        document.removeEventListener('mouseup', mup, false);
         dragElement = null;
     }
-
 }
 
 
