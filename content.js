@@ -57,7 +57,7 @@ function moveMemo(event) {
         for (let i = 0; i < elements.length; i++) {
             elements[i].style.zIndex = 1000;
         }
-        dragElement.style.zIndex += 10;
+        dragElement.style.zIndex = Number(dragElement.style.zIndex) + 10;
 
         x = event.pageX - dragElement.offsetLeft;
         y = event.pageY - dragElement.offsetTop;

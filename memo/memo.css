@@ -17,24 +17,26 @@
     border: 1pt solid gray;
 }
 
-.memo-container .titlebar {
+.memo-container > .titlebar {
     position: relative;
     float: left;
     margin: 5px;
+    cursor: move;
 
     width: calc(100% - 40px);
     height: 20px;
 }
 
-.memo-container .closebutton {
+.memo-container > .closebutton {
     float: right;
     margin: 5px;
+    cursor: pointer;
 
     width: 20px;
     height: 20px;
 }
 
-.memo-container .textarea {
+.memo-container > .textarea {
     box-sizing: border-box;
     position: relative;
     margin-left: auto;
@@ -60,7 +62,7 @@
     rgba(17, 20, 20, 0.2) calc(2em - 1px) 2em);
 }
 
-.memo-container .textarea:focus {
+.memo-container > .textarea:focus {
     box-sizing: border-box;
     
     border: none;
