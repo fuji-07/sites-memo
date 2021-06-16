@@ -26,20 +26,47 @@ function createMemo(pos) {
             closeButton.style.backgroundImage = `url("${imageUrl}")`;
 
             titleBar.addEventListener('mousedown', moveMemo);
-            textArea.addEventListener('input', resizeMemo);
             closeButton.addEventListener('click', deleteMemo);
+
+            //リファクタリング候補
+            textArea.addEventListener('input', resizeMemoForTextarea);
+            memo.addEventListener('mousedown', resizeMemoForContainer);
         });
 }
 
-function resizeMemo() {
-    const container = this.parentNode;
 
-    this.style.height = '0px';
-    const scrollHeight = this.scrollHeight;
+//リファクタリング候補
+function resizeMemoForTextarea() {
+    resizeMemo(this);
+}
 
-    this.style.height = scrollHeight + 'px';
+function resizeMemoForContainer() {
+    const textArea = this.getElementsByClassName('textarea')[0];
+
+    function addFunc() {
+        resizeMemo(textArea);
+    };
+    function removeFunc() {
+        document.removeEventListener('mousemove', addFunc);
+        document.removeEventListener('mouseup', removeFunc);
+        document.removeEventListener('mouseleave', removeFunc);
+    }
+
+    document.addEventListener('mousemove', addFunc);
+    document.addEventListener('mouseup', removeFunc);
+    document.addEventListener('mouseleave', removeFunc);
+}
+
+function resizeMemo(textArea) {
+    const container = textArea.parentNode;
+
+    textArea.style.height = '0px';
+    const scrollHeight = textArea.scrollHeight;
+
+    textArea.style.height = scrollHeight + 'px';
     container.style.height = scrollHeight + 50 + 'px';
 }
+//ここまで
 
 function deleteMemo(event) {
     this.parentNode.remove();
