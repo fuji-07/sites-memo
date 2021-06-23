@@ -1,5 +1,5 @@
 .memo-container {
-    z-index: 10000;
+    z-index: 1000;
     box-sizing: border-box;
     position: absolute;
 
@@ -56,7 +56,7 @@
     line-height: 2em;
 
     border: none;
-    background-color: lightyellow;
+    background-color: inherit;
     background-image: repeating-linear-gradient(to bottom,
     transparent 0 calc(2em - 1px),
     rgba(17, 20, 20, 0.2) calc(2em - 1px) 2em);
@@ -66,6 +66,5 @@
     box-sizing: border-box;
     
     border: none;
-    background-color: lightyellow;
     outline: none;
 }
