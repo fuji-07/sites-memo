@@ -2,6 +2,9 @@ const MEMO_WIDTH = 150;
 const MEMO_HEIGHT = 150;
 
 const parser = new DOMParser();
+const observer = new ResizeObserver((entries) => {
+    resizeMemo(entries[0].target);
+});
 
 function createMemo(pos) {
     // ボタンの種類
@@ -12,53 +15,42 @@ function createMemo(pos) {
     fetch(chrome.runtime.getURL('./memo/memo.html'))
         .then(response => response.text())
         .then((data) => {
-            const memo = parser.parseFromString(data, 'text/html').getElementsByClassName('memo-container')[0];
-            document.body.appendChild(memo);
-            return memo;
-        })
-        .then((memo) => {
-            const titleBar = memo.getElementsByClassName('titlebar')[0];
-            const textArea = memo.getElementsByClassName('textarea')[0];
-            const closeButton = memo.getElementsByClassName('closebutton')[0];
-
+            const memo = parser.parseFromString(data, 'text/html').querySelector('.memo-container');
+            const closeButton = memo.querySelector('.closebutton');
             memo.style.top = pos.Y + 'px';
             memo.style.left = pos.X + 'px';
+
             closeButton.style.backgroundImage = `url("${imageUrl}")`;
-
-            titleBar.addEventListener('mousedown', moveMemo);
-            closeButton.addEventListener('click', deleteMemo);
-
-            //リファクタリング候補
-            textArea.addEventListener('input', resizeMemoForTextarea);
-            memo.addEventListener('mousedown', resizeMemoForContainer);
+            document.body.appendChild(memo);
+            setMemoActions(memo);
         });
 }
 
+function setMemoActions(memo) {
+    const titleBar = memo.querySelector('.titlebar');
+    const textArea = memo.querySelector('.textarea');
+    const closeButton = memo.querySelector('.closebutton');
 
-//リファクタリング候補
-function resizeMemoForTextarea() {
-    resizeMemo(this);
+    titleBar.addEventListener('mousedown', moveMemo);
+    closeButton.addEventListener('click', deleteMemo);
+
+    textArea.addEventListener('input', resizeMemo);
+    observer.observe(memo);
 }
 
-function resizeMemoForContainer() {
-    const textArea = this.getElementsByClassName('textarea')[0];
-
-    function addFunc() {
-        resizeMemo(textArea);
-    };
-    function removeFunc() {
-        document.removeEventListener('mousemove', addFunc);
-        document.removeEventListener('mouseup', removeFunc);
-        document.removeEventListener('mouseleave', removeFunc);
+function resizeMemo(arg) {
+    let container;
+    let textArea;
+    if (arg instanceof Event) {
+        container = this.parentNode;
+        textArea = this;
+    } else if (arg instanceof Element) {
+        container = arg;
+        textArea = arg.querySelector('.textarea');
+    } else {
+        console.log('unexpected case!!! :-)');
+        return;
     }
-
-    document.addEventListener('mousemove', addFunc);
-    document.addEventListener('mouseup', removeFunc);
-    document.addEventListener('mouseleave', removeFunc);
-}
-
-function resizeMemo(textArea) {
-    const container = textArea.parentNode;
 
     textArea.style.height = '0px';
     const scrollHeight = textArea.scrollHeight;
@@ -66,7 +58,6 @@ function resizeMemo(textArea) {
     textArea.style.height = scrollHeight + 'px';
     container.style.height = scrollHeight + 50 + 'px';
 }
-//ここまで
 
 function deleteMemo(event) {
     this.parentNode.remove();
