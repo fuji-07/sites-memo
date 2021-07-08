@@ -1,3 +1,40 @@
+/*
+MIT License
+
+Copyright (c) 2021 M.Nogi, S.Fujii, K.Baba
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
+/** 
+ * @fileOverview メモを作成する関数を記述したファイルです。
+ * 
+ * @author M.Nogi, S.Fujii, K.Baba
+ * ┌───────────────────────────┐
+ * │　　     OCSへGo！！        │
+ * └───────────────────────────┘
+ *  　　　　ヽ(＾ω＾)ﾉ
+ *  　　　　　(　へ )
+ *  　 　　　　く
+ * @version 1.0.0
+ */
+
 const MEMO_WIDTH = 150;
 const MEMO_HEIGHT = 150;
 
@@ -6,6 +43,9 @@ const observer = new ResizeObserver((entries) => {
     resizeMemo(entries[0].target);
 });
 
+/** メモを作成しサイトに張り付ける関数
+ * @param  {{ X: Number, Y: Number }} pos 張り付ける座標
+ */
 function createMemo(pos) {
     // ボタンの種類
     const imagePath = 'memo/deleteButton/';
@@ -26,18 +66,24 @@ function createMemo(pos) {
         });
 }
 
+/** メモのイベントを登録する関数
+ * @param  {Element} memo メモ要素
+ */
 function setMemoActions(memo) {
     const titleBar = memo.querySelector('.titlebar');
     const textArea = memo.querySelector('.textarea');
     const closeButton = memo.querySelector('.closebutton');
 
-    titleBar.addEventListener('mousedown', moveMemo);
+    titleBar.addEventListener('mousedown', startMoveMemo);
     closeButton.addEventListener('click', deleteMemo);
 
     textArea.addEventListener('input', resizeMemo);
     observer.observe(memo);
 }
 
+/** メモの大きさを自動調整する関数
+ * @param  {Event | Element} arg 呼び出し元イベント又はメモのコンテナ要素
+ */
 function resizeMemo(arg) {
     let container;
     let textArea;
@@ -59,7 +105,7 @@ function resizeMemo(arg) {
     container.style.height = scrollHeight + 50 + 'px';
 }
 
-function deleteMemo(event) {
+function deleteMemo() {
     this.parentNode.remove();
 }
 
@@ -67,7 +113,11 @@ function deleteMemo(event) {
 let startX;
 let startY;
 let dragElement;
-function moveMemo(event) {
+
+/** メモの移動を開始する関数
+ * @param  {Event} event 呼び出し元イベント
+ */
+function startMoveMemo(event) {
     if (event.target.className !== 'closebutton') {
         dragElement = this.parentNode;
 
@@ -80,12 +130,15 @@ function moveMemo(event) {
         startX = event.pageX - dragElement.offsetLeft;
         startY = event.pageY - dragElement.offsetTop;
 
-        document.addEventListener('mousemove', mmove, false);
-        document.addEventListener('mouseup', mup, false);
+        document.addEventListener('mousemove', moveMemo, false);
+        document.addEventListener('mouseup', stopMoveMemo, false);
     }
 }
 
-function mmove(event) {
+/** メモを移動させる関数
+ * @param  {Event} event 呼び出し元イベント
+ */
+function moveMemo(event) {
     const moveToPosX = event.pageX - startX;
     const moveToPosY = event.pageY - startY;
 
@@ -102,16 +155,19 @@ function mmove(event) {
     }
 }
 
-function mup(event) {
+/** メモの移動を終了する関数
+ * @param  {Event} event 呼び出し元のイベント
+ */
+function stopMoveMemo(event) {
     if (dragElement !== null) {
-        document.removeEventListener('mousemove', mmove, false);
-        document.removeEventListener('mouseup', mup, false);
+        document.removeEventListener('mousemove', moveMemo, false);
+        document.removeEventListener('mouseup', stopMoveMemo, false);
         dragElement = null;
     }
 }
 
 
-
+//コンテキストメニュー処理
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     //メモの作成が呼び出された場合、座標指定
     if (message.actionName == 'createMemo') {
