@@ -31,6 +31,8 @@ SOFTWARE.
  * @version 1.0.0
  */
 
+/** 定数 */
+const START_Z_INDEX = 1000;
 
 /** メモを作成しサイトに張り付ける関数
  * 
@@ -54,9 +56,12 @@ let createMemo = (function () {
         const memo = (function () {
             const container = parser.parseFromString(text, 'text/html').querySelector('.sitesmemo');
             const closeButton = container.querySelector('.closebutton');
+
+            const index = document.getElementsByClassName('sitesmemo').length;
+
+            container.style.zIndex = START_Z_INDEX + index;
             container.style.left = x + 'px';
             container.style.top = y + 'px';
-
             closeButton.style.backgroundImage = `url("${imageUrl}")`;
             return container;
         })();
@@ -70,8 +75,6 @@ let createMemo = (function () {
  * @param {Element} memo メモ要素
  */
 let setMemoEvents = (function () {
-    const START_Z_INDEX = 1000;
-
     let startX = 0;
     let startY = 0;
     let dragMemo = null;
@@ -137,9 +140,6 @@ let setMemoEvents = (function () {
         const container = memo;
         const closebutton = container.querySelector('.closebutton');
         const titlebar = container.querySelector('.titlebar');
-
-        const index = document.getElementsByClassName('sitesmemo').length;
-        memo.style.zIndex = START_Z_INDEX + index;
 
         container.addEventListener('mousedown', sortzIndex);
         titlebar.addEventListener('mousedown', move.start);
