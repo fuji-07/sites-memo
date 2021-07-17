@@ -1,15 +1,20 @@
-.memo-container {
-    z-index: 1000;
+:root{
+    --button-size: 20px;
+    --margins: 5px;
+}
+
+.sitesmemo.container {
     box-sizing: border-box;
     position: absolute;
+    padding: 0;
 
-    width: 150px;
     min-width: 150px;
-    height: 150px;
+    width: 150px;
     min-height: 150px;
+    height: 150px;
 
     text-align: center;
-    resize: horizontal;
+    resize: both;
     overflow: auto;
 
     box-shadow: 2px 2px 4px;
@@ -17,38 +22,42 @@
     border: 1pt solid gray;
 }
 
-.memo-container > .titlebar {
+.sitesmemo.container * {
     position: relative;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.sitesmemo.container .titlebar {
     float: left;
-    margin: 5px;
+    margin: var(--margins);
     cursor: move;
 
-    width: calc(100% - 40px);
-    height: 20px;
+    padding: 0;
+    width: calc(100% - var(--margins) * 4 - var(--button-size));
+    height: var(--button-size);
 }
 
-.memo-container > .closebutton {
+.sitesmemo.container .closebutton {
     float: right;
-    margin: 5px;
+    margin: var(--margins);
     cursor: pointer;
 
-    width: 20px;
-    height: 20px;
+    width: var(--button-size);
+    height: var(--button-size);
 }
+.sitesmemo.container .textarea {
 
-.memo-container > .textarea {
-    box-sizing: border-box;
-    position: relative;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 5px;
-    
-    width: calc(100% - 14px);
-    min-height: 100px;
-    height: 100px;
+    margin: var(--margins);
+    padding: 0;
+
+    min-width: 0;
+    min-height: 0;
+    width: calc(100% - var(--margins) * 2);
+    height: calc(100% - var(--button-size) - var(--margins) * 3 - 20px);
 
     resize: none;
-    overflow: hidden;
+    overflow: auto;
     text-align: left;
 
     font-family:Arial, Helvetica, sans-serif;
@@ -57,14 +66,23 @@
 
     border: none;
     background-color: inherit;
-    background-image: repeating-linear-gradient(to bottom,
-    transparent 0 calc(2em - 1px),
-    rgba(17, 20, 20, 0.2) calc(2em - 1px) 2em);
 }
-
-.memo-container > .textarea:focus {
+.sitesmemo.container .textarea:focus {
     box-sizing: border-box;
     
     border: none;
     outline: none;
+}
+.sitesmemo.container .textarea::-webkit-scrollbar {
+    width: 5px;
+}
+.sitesmemo.container .textarea::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+.sitesmemo.container .textarea::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 2px;
+}
+.sitesmemo.container .textarea::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }

@@ -1,10 +1,11 @@
-let rightClickedPos;
+let x;
+let y;
 
 //右クリック位置保存
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     if (message.actionName == 'setMousePos') {
-        rightClickedPos = message.pos;
-        console.log(rightClickedPos);
+        x = message.x;
+        y = message.y;
     }
     sendResponse();
 });
@@ -14,7 +15,7 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
     const selectedMenu = info.menuItemId;
     switch (selectedMenu) {
         case 'createMemo':
-            chrome.tabs.sendMessage(tab.id, { actionName: 'createMemo', pos: rightClickedPos });
+            chrome.tabs.sendMessage(tab.id, { actionName: 'createMemo', x: x, y: y });
             break;
     }
 });
