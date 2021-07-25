@@ -39,7 +39,7 @@ const START_Z_INDEX = 1000;
  * @param {Number} x 張り付けるx座標
  * @param {Number} y 張り付けるy座標
  */
-let createMemo = (function () {
+let createMemo = function () {
     const parser = new DOMParser();
 
     const imagePath = 'memo/deleteButton/';
@@ -69,16 +69,12 @@ let createMemo = (function () {
         setMemoEvents(memo);
         document.body.appendChild(memo);
     }
-})();
+}();
 
 /** メモのイベントを登録する関数
  * @param {Element} memo メモ要素
  */
-let setMemoEvents = (function () {
-    let startX = 0;
-    let startY = 0;
-    let dragMemo = null;
-
+let setMemoEvents = function () {
     /** メモの重なりを調整する関数
      * 
      * @param {Event} event DOMイベント
@@ -94,37 +90,43 @@ let setMemoEvents = (function () {
 
     /** メモの移動に関係する関数群
      */
-    let move = {
-        /** 移動を開始する関数
-         * @param {Event} event DOMイベント
-         */
-        start: function (event) {
-            dragMemo = this.parentNode;
-            startX = event.pageX - dragMemo.offsetLeft;
-            startY = event.pageY - dragMemo.offsetTop;
+    let move = function () {
+        let startX = 0;
+        let startY = 0;
+        let dragMemo = null;
 
-            document.addEventListener('mousemove', move.moving);
-            document.addEventListener('mouseup', move.stop);
-        },
-        /** 移動中呼び出される関数
-         * @param {Event} event DOMイベント
-         */
-        moving: function (event) {
-            const moveToPosX = event.pageX - startX;
-            const moveToPosY = event.pageY - startY;
+        return {
+            /** 移動を開始する関数
+             * @param {Event} event DOMイベント
+             */
+            start: function (event) {
+                dragMemo = this.parentNode;
+                startX = event.pageX - dragMemo.offsetLeft;
+                startY = event.pageY - dragMemo.offsetTop;
 
-            dragMemo.style.left = (0 <= moveToPosX) ? moveToPosX : 0;
-            dragMemo.style.top = (0 <= moveToPosY) ? moveToPosY : 0;
-        },
-        /** 移動を終了する関数
-         * @param {Event} event DOMイベント
-         */
-        stop: function (event) {
-            document.removeEventListener('mousemove', move.moving);
-            document.removeEventListener('mouseup', move.stop);
-            dragMemo = null;
+                document.addEventListener('mousemove', move.moving);
+                document.addEventListener('mouseup', move.stop);
+            },
+            /** 移動中呼び出される関数
+             * @param {Event} event DOMイベント
+             */
+            moving: function (event) {
+                const moveToPosX = event.pageX - startX;
+                const moveToPosY = event.pageY - startY;
+
+                dragMemo.style.left = (0 <= moveToPosX) ? moveToPosX : 0;
+                dragMemo.style.top = (0 <= moveToPosY) ? moveToPosY : 0;
+            },
+            /** 移動を終了する関数
+             * @param {Event} event DOMイベント
+             */
+            stop: function (event) {
+                document.removeEventListener('mousemove', move.moving);
+                document.removeEventListener('mouseup', move.stop);
+                dragMemo = null;
+            }
         }
-    }
+    }();
 
     /** メモを削除する関数
      * @param {Event} event DOMイベント
@@ -145,7 +147,7 @@ let setMemoEvents = (function () {
         titlebar.addEventListener('mousedown', move.start);
         closebutton.addEventListener('mouseup', remove);
     }
-})();
+}();
 
 //コンテキストメニュー処理
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
