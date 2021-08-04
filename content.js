@@ -111,20 +111,9 @@ let setMemoEvents = function () {
              * @param {Event} event DOMイベント
              */
             moving: function (event) {
-                const moveToPosX = event.pageX - startX;
-                const moveToPosY = event.pageY - startY;
+                //----------ここに記述-----------
 
-                if (0 <= moveToPosX) {
-                    dragMemo.style.left = moveToPosX;
-                } else {
-                    dragMemo.style.left = 0;
-                }
-
-                if (0 <= moveToPosY) {
-                    dragMemo.style.top = moveToPosY;
-                } else {
-                    dragMemo.style.top = 0;
-                }
+                //------------------------------
             },
             /** 移動を終了する関数
              * @param {Event} event DOMイベント
@@ -141,7 +130,9 @@ let setMemoEvents = function () {
      * @param {Event} event DOMイベント
      */
     let remove = function (event) {
-        this.parentNode.remove();
+        //----------ここに記述-----------
+        
+        //------------------------------
     }
 
     /**
@@ -149,12 +140,14 @@ let setMemoEvents = function () {
      */
     return function (memo) {
         const container = memo;
-        const closebutton = container.querySelector('.closebutton');
-        const titlebar = container.querySelector('.titlebar');
-
         container.addEventListener('mousedown', sortzIndex);
+
+        const titlebar = container.querySelector('.titlebar');
         titlebar.addEventListener('mousedown', move.start);
-        closebutton.addEventListener('mouseup', remove);
+
+        //----------ここに記述-----------
+
+        //------------------------------
     }
 }();
 
