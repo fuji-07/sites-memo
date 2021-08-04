@@ -114,8 +114,17 @@ let setMemoEvents = function () {
                 const moveToPosX = event.pageX - startX;
                 const moveToPosY = event.pageY - startY;
 
-                dragMemo.style.left = (0 <= moveToPosX) ? moveToPosX : 0;
-                dragMemo.style.top = (0 <= moveToPosY) ? moveToPosY : 0;
+                if (0 <= moveToPosX) {
+                    dragMemo.style.left = moveToPosX;
+                } else {
+                    dragMemo.style.left = 0;
+                }
+
+                if (0 <= moveToPosY) {
+                    dragMemo.style.top = moveToPosY;
+                } else {
+                    dragMemo.style.top = 0;
+                }
             },
             /** 移動を終了する関数
              * @param {Event} event DOMイベント
