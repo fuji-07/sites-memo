@@ -1,6 +1,6 @@
 /*
 MIT License
-Copyright (c) 2021 M.Nogi, S.Fujii, K.Baba
+Copyright (c) 2021 S.Fujii, K.Baba, M.Nogi
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
@@ -21,7 +21,7 @@ SOFTWARE.
 /** 
  * @fileOverview メモを作成する関数を記述したファイルです。
  * 
- * @author M.Nogi, S.Fujii, K.Baba
+ * @author S.Fujii, K.Baba, M.Nogi
  * ┌───────────────────────────┐
  * │　　     OCSへGo！！        │
  * └───────────────────────────┘
