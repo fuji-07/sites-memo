@@ -149,11 +149,12 @@ let setMemoEvents = function () {
      */
     return function (memo) {
         const container = memo;
-        const closebutton = container.querySelector('.closebutton');
-        const titlebar = container.querySelector('.titlebar');
-
         container.addEventListener('mousedown', sortzIndex);
+
+        const titlebar = container.querySelector('.titlebar');
         titlebar.addEventListener('mousedown', move.start);
+
+        const closebutton = container.querySelector('.closebutton');
         closebutton.addEventListener('mouseup', remove);
     }
 }();
