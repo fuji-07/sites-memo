@@ -56,6 +56,7 @@ let createMemo = function () {
         const memo = (function () {
             const container = parser.parseFromString(text, 'text/html').querySelector('.sitesmemo');
             const closeButton = container.querySelector('.closebutton');
+            const textArea = container.querySelector('.textarea');
 
             const index = document.getElementsByClassName('sitesmemo').length;
 
@@ -63,6 +64,11 @@ let createMemo = function () {
             container.style.left = x + 'px';
             container.style.top = y + 'px';
             closeButton.style.backgroundImage = `url("${imageUrl}")`;
+
+            if (textArea) {
+                textArea.spellcheck = false;
+            }
+            
             return container;
         })();
 
@@ -131,7 +137,7 @@ let setMemoEvents = function () {
      */
     let remove = function (event) {
         //----------ここに記述-----------
-        
+
         //------------------------------
     }
 
