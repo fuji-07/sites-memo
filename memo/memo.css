@@ -19,7 +19,8 @@
 
     box-shadow: 2px 2px 4px;
     background-color: lightyellow;
-    border: 1pt solid gray;
+    border: 1px solid gray;
+    border-radius: 10px;
 }
 
 .sitesmemo.container * {
