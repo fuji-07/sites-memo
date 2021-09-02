@@ -146,7 +146,7 @@ let setMemoEvents = function () {
     /** メモを削除する関数
      * @param {Event} event DOMイベント
      */
-    let remove = function (event) {
+    let close = function (event) {
         this.parentNode.remove();
     }
 
@@ -161,7 +161,7 @@ let setMemoEvents = function () {
         titlebar.addEventListener('mousedown', move.start);
 
         const closebutton = container.querySelector('.closebutton');
-        closebutton.addEventListener('mouseup', remove);
+        closebutton.addEventListener('mouseup', close);
     }
 }();
 
