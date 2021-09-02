@@ -135,7 +135,7 @@ let setMemoEvents = function () {
     /** メモを削除する関数
      * @param {Event} event DOMイベント
      */
-    let remove = function (event) {
+    let close = function (event) {
         //----------ここに記述-----------
 
         //------------------------------
