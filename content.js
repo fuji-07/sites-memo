@@ -56,7 +56,7 @@ let createMemo = function () {
         const memo = (function () {
             const container = parser.parseFromString(text, 'text/html').querySelector('.sitesmemo');
             const closeButton = container.querySelector('.closebutton');
-            const textArea = container.querySelector('.textarea');
+            const textArea = container.querySelector('.note');
 
             const index = document.getElementsByClassName('sitesmemo').length;
 

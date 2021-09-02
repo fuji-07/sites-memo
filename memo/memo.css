@@ -47,7 +47,7 @@
     width: var(--button-size);
     height: var(--button-size);
 }
-.sitesmemo.container .textarea {
+.sitesmemo.container .note {
 
     margin: var(--margins);
     padding: 0;
@@ -68,22 +68,22 @@
     border: none;
     background-color: inherit;
 }
-.sitesmemo.container .textarea:focus {
+.sitesmemo.container .note:focus {
     box-sizing: border-box;
     
     border: none;
     outline: none;
 }
-.sitesmemo.container .textarea::-webkit-scrollbar {
+.sitesmemo.container .note::-webkit-scrollbar {
     width: 5px;
 }
-.sitesmemo.container .textarea::-webkit-scrollbar-track {
+.sitesmemo.container .note::-webkit-scrollbar-track {
     background: #f1f1f1;
 }
-.sitesmemo.container .textarea::-webkit-scrollbar-thumb {
+.sitesmemo.container .note::-webkit-scrollbar-thumb {
     background: #888;
     border-radius: 2px;
 }
-.sitesmemo.container .textarea::-webkit-scrollbar-thumb:hover {
+.sitesmemo.container .note::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
